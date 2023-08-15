@@ -29,7 +29,7 @@ public class Principal {
         int lot;
         double price;
 
-        System.out.println("Ingrese el name del product");
+        /*System.out.println("Ingrese el name del product");
         name= sc.next();
         System.out.println("Ingrese la category");
         category= sc.next();
@@ -38,7 +38,7 @@ public class Principal {
         System.out.println("Ingrese el lot");
         lot= sc.nextInt();
         System.out.println("Ingrese el price");
-        price= sc.nextDouble();
+        price= sc.nextDouble();*/
 
         //metod para insertar en la db - metodo espesifico  - DAO ( DTO) -
         // Forma 1
@@ -52,6 +52,7 @@ public class Principal {
             System.err.println("Error al insertar un producto" + e.getMessage());
         }*/
         // Forma 2
+        /*
         try{
 
             String querySql =  "INSERT INTO product (name,category,stock,lot,price) VALUES (?,?,?,?,?)";
@@ -66,6 +67,41 @@ public class Principal {
             preparedStatement.executeUpdate();
 
             System.out.println("producto creado ");
+
+        }catch (Exception e){
+            System.err.println("Error al insertar un producto" + e.getMessage());
+        }*/
+        // update
+        System.out.println("Ingrese el name del product");
+        name= sc.next();
+        System.out.println("Ingrese la category");
+        category= sc.next();
+        System.out.println("Ingrese el stock");
+        stock= sc.nextInt();
+        System.out.println("Ingrese el lot");
+        lot= sc.nextInt();
+        System.out.println("Ingrese el price");
+        price= sc.nextDouble();
+        System.out.println("Ingrese el ID del producto");
+        int id = sc.nextInt();
+        try {
+            String updateQuery =
+                    "UPDATE product " +
+                        "SET name = ? ," +
+                        "category = ?," +
+                        "stock = ?" +
+                        "lot = ? " +
+                        "price = ? " +
+                    "Where id_product = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(2,category);
+            preparedStatement.setInt(3,stock);
+            preparedStatement.setInt(4,lot);
+            preparedStatement.setDouble(5,price);
+            preparedStatement.setInt(6,id);
+
+            preparedStatement.executeUpdate();
 
         }catch (Exception e){
             System.err.println("Error al insertar un producto" + e.getMessage());
