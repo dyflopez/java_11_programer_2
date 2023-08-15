@@ -7,7 +7,7 @@ public class AdminMigration {
     public void orquestarMigraciones(Connection connection){
         try {
             System.out.println("Ejecutando migraciones");
-            CreateTableExample createTableExample = new CreateTableExample();
+            CreateTableProduct createTableExample = new CreateTableProduct();
             Statement statement = connection.createStatement();
             createTableExample.up(statement);
             connection.close();
