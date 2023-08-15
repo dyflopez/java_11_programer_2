@@ -73,9 +73,9 @@ public class Principal {
         }*/
         // update
         System.out.println("Ingrese el name del product");
-        name= sc.next();
+        name= sc.nextLine();
         System.out.println("Ingrese la category");
-        category= sc.next();
+        category= sc.nextLine();
         System.out.println("Ingrese el stock");
         stock= sc.nextInt();
         System.out.println("Ingrese el lot");
@@ -89,8 +89,8 @@ public class Principal {
                     "UPDATE product " +
                         "SET name = ? ," +
                         "category = ?," +
-                        "stock = ?" +
-                        "lot = ? " +
+                        "stock = ?," +
+                        "lot = ? ," +
                         "price = ? " +
                     "Where id_product = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
@@ -101,11 +101,21 @@ public class Principal {
             preparedStatement.setDouble(5,price);
             preparedStatement.setInt(6,id);
 
-            preparedStatement.executeUpdate();
+            var result = preparedStatement.executeUpdate();
+            System.out.println(result);
+            if(result>0){
+                System.out.println("se actualizo la informacion");
+            }else{
+                System.out.println("No se actualizo");
+            }
+
+            System.out.println("se actualizo");
 
         }catch (Exception e){
             System.err.println("Error al insertar un producto" + e.getMessage());
         }
+
+        //delete
     }
 
 
