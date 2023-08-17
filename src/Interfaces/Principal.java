@@ -2,13 +2,12 @@ package Interfaces;
 
 
 import config.ConnectionDB;
+import model.ProductEntity;
 import model.migrations.AdminMigration;
 import model.repository.ProductRepository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Scanner;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class Principal {
     public static void main(String[] args) {
@@ -26,7 +25,32 @@ public class Principal {
             adminMigration.orquestarMigraciones(connection);
         }
 
-        System.out.println("Insetar en la base de datos");
+
+        var listProdiuct = productRepository.find();
+        System.out.println("+++++");
+        for (ProductEntity pruct : listProdiuct) {
+            System.out.println(pruct.getName());
+            System.out.println(pruct.getCategory());
+            System.out.println(pruct.getPrice());
+        }
+        System.out.println("strams");
+        listProdiuct
+                .stream()
+                .forEach(p-> System.out.println(p.toString()));
+
+
+
+        listProdiuct
+                .stream()
+                .map(x->x.toString())
+                .forEach(p-> System.out.println(p));
+
+
+
+
+
+
+
 
     }
 

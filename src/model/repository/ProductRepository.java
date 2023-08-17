@@ -6,6 +6,8 @@ import model.ProductEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProductRepository {
@@ -93,19 +95,19 @@ public class ProductRepository {
 
             String setPameter="Set ";
             if(Objects.nonNull(name)){
-                setPameter= "name = ? ,";
+                setPameter= "name = "+name+",";
             }
             if(Objects.nonNull(category)){
-                setPameter= "category = ? ,";
+                setPameter= "category = "+category+" ,";
             }
             if(Objects.nonNull(stock)){
-                setPameter= "stock = ? ,";
+                setPameter= "stock = "+stock+" ,";
             }
             if(Objects.nonNull(lot)){
-                setPameter= "lot = ? ,";
+                setPameter= "lot = "+lot+" ,";
             }
             if(Objects.nonNull(price)){
-                setPameter= "price = ? ,";
+                setPameter= "price = "+price+" ,";
             }
             updateQuery= updateQuery+setPameter+ "Where id_product = "+ id;
             Statement statement = connection.createStatement();
@@ -138,12 +140,15 @@ public class ProductRepository {
         }
     }
 
-    public void find (){
+    public  List<ProductEntity> find (){
+        List<ProductEntity> productEntityList = new ArrayList<>();
         try {
+
+
             ConnectionDB connectionDB = new ConnectionDB();
             var connection = connectionDB.doConnectionDb();
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM product WHERE name = 'agua'";
+            String sql = "SELECT * FROM product";
             ResultSet resultSet = statement.executeQuery(sql);
            /* while (resultSet.next()){
                 System.out.println(resultSet.getString("id_product"));
@@ -160,10 +165,20 @@ public class ProductRepository {
                 for (int i=1;i <numeroColumns;i++){
                     System.out.println(meta.getColumnName(i) + ":" + resultSet.getString(i));
                 }
-
+                ProductEntity product = new ProductEntity();
+                product.setIdProduct(resultSet.getString("id_product"));
+                product.setName(resultSet.getString("name"));
+                product.setCategory(resultSet.getString("category"));
+                product.setStock(resultSet.getInt("stock"));
+                product.setLot(resultSet.getInt("lot"));
+                product.setPrice(resultSet.getDouble("price"));
+                productEntityList.add(product);
             }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
+        }finally {
+            return productEntityList;
         }
     }
 }
