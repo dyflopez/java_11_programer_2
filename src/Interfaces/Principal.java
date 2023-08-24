@@ -38,10 +38,19 @@ public class Principal {
 
         var listaProductos = productController.find();
 
-        listaProductos.forEach(System.out::println);
+        //listaProductos.forEach(System.out::println);
 
 
+        // Necesito que me listen todos los produtos que su stock sea mayot a 19
+        var stock =listaProductos
+                .stream()
+                .filter(n->n.getCategory()
+                        .toLowerCase()
+                        .equals("bebida"))
+                .mapToInt(n->n.getStock())
+                .sum();
 
+        System.out.println(stock);
     }
 
 
