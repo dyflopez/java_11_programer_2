@@ -1,8 +1,10 @@
 package model;
 
 
+import dtos.ProductDTO;
+
 public class ProductEntity {
-    private String tableName="prodcut";
+    private String tableName="product";
     //id_product
     private String idProduct;
     private String name;
@@ -10,6 +12,25 @@ public class ProductEntity {
     private int stock;
     private int lot;
     private  double price;
+
+    public ProductEntity() {
+    }
+
+    public ProductEntity(String name, String category, int stock, int lot, double price) {
+        this.name = name;
+        this.category = category;
+        this.stock = stock;
+        this.lot = lot;
+        this.price = price;
+    }
+
+    public ProductEntity(ProductDTO productoDTO) {
+        this.name =productoDTO.getName();
+        this.setCategory(productoDTO.getCategory());
+        this.stock=productoDTO.getStock();
+        this.lot=productoDTO.getLot();
+        this.price=productoDTO.getPrice();
+    }
 
     public String getIdProduct() {
         return idProduct;

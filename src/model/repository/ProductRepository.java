@@ -162,9 +162,9 @@ public class ProductRepository {
             var numeroColumns = meta.getColumnCount();
             System.out.println("la cantidad de columnas numeroColumns");
             while (resultSet.next()){
-                for (int i=1;i <numeroColumns;i++){
+             /*   for (int i=1;i <numeroColumns;i++){
                     System.out.println(meta.getColumnName(i) + ":" + resultSet.getString(i));
-                }
+                }*/
                 ProductEntity product = new ProductEntity();
                 product.setIdProduct(resultSet.getString("id_product"));
                 product.setName(resultSet.getString("name"));

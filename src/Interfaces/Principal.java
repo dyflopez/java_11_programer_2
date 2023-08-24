@@ -1,13 +1,11 @@
 package Interfaces;
 
 
+import Controller.ProductController;
 import config.ConnectionDB;
-import model.ProductEntity;
 import model.migrations.AdminMigration;
 import model.repository.ProductRepository;
 
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Principal {
     public static void main(String[] args) {
@@ -24,31 +22,23 @@ public class Principal {
         if(flagMigration){
             adminMigration.orquestarMigraciones(connection);
         }
+        //MENU llamado al controller
+        ProductController productController = new ProductController();
+        //Usuario que ingrese la infomracion para crear el producto
+       /*  ProductDTO productDTO = new ProductDTO();
+
+        productDTO.setCategory("Bebida");
+        productDTO.setLot(10);
+        productDTO.setName("Cocacola");
+        productDTO.setPrice(2000);
+        productDTO.setStock(80);
+
+        productController.create(productDTO);*/
 
 
-        var listProdiuct = productRepository.find();
-        System.out.println("+++++");
-        for (ProductEntity pruct : listProdiuct) {
-            System.out.println(pruct.getName());
-            System.out.println(pruct.getCategory());
-            System.out.println(pruct.getPrice());
-        }
-        System.out.println("strams");
-        listProdiuct
-                .stream()
-                .forEach(p-> System.out.println(p.toString()));
+        var listaProductos = productController.find();
 
-
-
-        listProdiuct
-                .stream()
-                .map(x->x.toString())
-                .forEach(p-> System.out.println(p));
-
-
-
-
-
+        listaProductos.forEach(System.out::println);
 
 
 
