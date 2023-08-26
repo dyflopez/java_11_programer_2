@@ -5,6 +5,7 @@ import Controller.ProductController;
 import config.ConnectionDB;
 import model.migrations.AdminMigration;
 import model.repository.ProductRepository;
+import utils.Commons;
 
 
 public class Principal {
@@ -13,8 +14,6 @@ public class Principal {
         AdminMigration adminMigration = new AdminMigration();
         ConnectionDB connectionDB = new ConnectionDB();
 
-        //Repository Producto
-
         ProductRepository productRepository = new ProductRepository();
 
         var connection = connectionDB.doConnectionDb();
@@ -22,35 +21,39 @@ public class Principal {
         if(flagMigration){
             adminMigration.orquestarMigraciones(connection);
         }
-        //MENU llamado al controller
+
         ProductController productController = new ProductController();
-        //Usuario que ingrese la infomracion para crear el producto
-       /*  ProductDTO productDTO = new ProductDTO();
-
-        productDTO.setCategory("Bebida");
-        productDTO.setLot(10);
-        productDTO.setName("Cocacola");
-        productDTO.setPrice(2000);
-        productDTO.setStock(80);
-
-        productController.create(productDTO);*/
-
 
         var listaProductos = productController.find();
 
-        //listaProductos.forEach(System.out::println);
 
-
-        // Necesito que me listen todos los produtos que su stock sea mayot a 19
-        var stock =listaProductos
+        // Necesito que me listen todos los produtos que su stock sea mayor a 19
+        /*var stock =listaProductos
                 .stream()
                 .filter(n->n.getCategory()
                         .toLowerCase()
                         .equals("bebida"))
                 .mapToInt(n->n.getStock())
-                .sum();
+                .sum();*/
 
-        System.out.println(stock);
+        listaProductos
+                .stream()
+                .forEach(
+                        System.out::println
+                );
+        /*.forEach(
+                        Commons.writeFile(
+                                "productBackup.txt",
+                                datos-> System.out.println(datos)
+                        )
+                );*/
+        /*
+
+        crear el backup
+        listaProductos
+                .stream()
+                .forEach(p-> Commons.writeFile("log.txt",p.toString()));*/
+
     }
 
 
