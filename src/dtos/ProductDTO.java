@@ -2,7 +2,7 @@ package dtos;
 
 public class ProductDTO {
 
-    private String idProduct;
+    private int idProduct;
 
     private String name;
 
@@ -14,11 +14,23 @@ public class ProductDTO {
 
     private  double price;
 
-    public String getIdProduct() {
+    public ProductDTO(int idProduct, String name, String category, int stock, int lot, double price) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.category = category;
+        this.stock = stock;
+        this.lot = lot;
+        this.price = price;
+    }
+
+    public ProductDTO() {
+    }
+
+    public int getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(String idProduct) {
+    public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
 

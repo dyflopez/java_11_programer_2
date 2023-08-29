@@ -88,8 +88,9 @@ public class ProductEntity {
         this.price = price;
     }
 
-
-
+    public String saveBackup(){
+        return  idProduct+","+name+","+category+","+stock+","+lot+","+price;
+    }
     @Override
     public String toString() {
         return "ProductEntity{" +

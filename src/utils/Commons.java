@@ -30,9 +30,9 @@ public class Commons {
             System.out.println(e.getMessage());
         }
     }
-    public static  void  fileReadBackup(String nombre){
+    public static  List<String>  fileReadBackup(String nombre){
+        List<String> stringList = new ArrayList<>();
         try {
-            List<ProductDTO> productDTOList = new ArrayList<>();
             ProductDTO productDTO = new ProductDTO();
             //Crear un FileReader para leer desde el archivo
             //objeto que busca el archivo
@@ -44,16 +44,14 @@ public class Commons {
             //bufferedReader.lines().forEach(System.out::println);
             String line ="";
             while ((line= bufferedReader.readLine())!=null){
-                System.out.println(line);
-
+               // System.out.println(line);
+                stringList.add(line);
             }
-
-
             bufferedReader.close();
-
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return stringList;
     }
 
     public static  void leerEnRutaEspesifica(){
