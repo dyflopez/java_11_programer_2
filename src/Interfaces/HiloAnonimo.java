@@ -3,7 +3,7 @@ package Interfaces;
 public class HiloAnonimo {
     public static void main(String[] args) {
          Runnable cronometro = ()->{
-             for(int segundos=0 ;;segundos++){
+             for(int segundos=0;;segundos++){
                  System.out.println("tiempo transcurrido " + segundos +" segundos");
                  try {
                      Thread.sleep(1000);

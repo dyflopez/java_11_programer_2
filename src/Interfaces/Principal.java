@@ -1,41 +1,43 @@
 package Interfaces;
 
 
+import Controller.DatabaseController;
 import Controller.ProductController;
-import config.ConnectionDB;
+import config.ConnectionPostgresSql;
 import dtos.ProductDTO;
 import model.ProductEntity;
-import model.migrations.AdminMigration;
+import model.repository.DatabaseRepository;
 import model.repository.ProductRepository;
 import utils.Commons;
 
-import javax.swing.text.Utilities;
 import java.util.regex.Pattern;
 
 
 public class Principal {
     public static void main(String[] args) {
-        boolean flagMigration = false; // mejorar esta parte codigo
-        boolean backup = true; // mejorar esta parte codigo
-        AdminMigration adminMigration = new AdminMigration();
-        ConnectionDB connectionDB = new ConnectionDB();
+        boolean backup = false;
         ProductController productController = new ProductController();
 
-        ProductRepository productRepository = new ProductRepository();
+        DatabaseController databaseController = new DatabaseController();
 
-        var connection = connectionDB.doConnectionDb();
+        //databaseController.executeMigration();
 
-        if(flagMigration){
-            adminMigration.orquestarMigraciones(connection);
-        }
+        ProductDTO productDTO = new ProductDTO();
+
+       /* productDTO.setStock(200);
+        productDTO.setPrice(2000);
+        productDTO.setName("ropa");
+        productDTO.setLot(1);
+        productDTO.setCategory("camisa polo");
+        productController.create(productDTO);*/
+
         if(backup){
-
             var lines = Commons.fileReadBackup("backupProduct.txt");
             lines
                     .stream()
                     .forEach(System.out::println);
-            //Split
 
+            //split
             Pattern pattern = Pattern.compile(",");
 
             lines
@@ -62,7 +64,6 @@ public class Principal {
                     .stream()
                     .map(s->pattern.split(s))
                     .map(s-> new ProductDTO(
-                                            Integer.parseInt(s[0]),
                                             s[1],
                                             s[2],
                                             Integer.parseInt(s[3]),
@@ -71,7 +72,7 @@ public class Principal {
                     ))
                     .forEach(s-> productController.create(s));
 
-         /*   lines
+         /* lines
                     .stream()
                     .map(linea->{
                         String [] itmes = pattern.split(linea);
@@ -99,7 +100,6 @@ public class Principal {
                         productController.create(productDTO);
                     });
 
-
             ProductDTO product = new ProductDTO();*/
 
         }
@@ -107,9 +107,37 @@ public class Principal {
 
 
 
-       /*  var listaProductos = productController.find();
 
 
+         var listaProductos = productController.find();
+
+
+       /*   listaProductos
+                .stream()
+                .forEach(producto -> System.out.println(producto.toString()));
+*/
+        var total =listaProductos
+                .stream()
+                .filter(s->s.getCategory().equalsIgnoreCase("bebida"))
+                .count();
+
+        var totalSuma= listaProductos
+                .stream()
+                .filter(s->s.getCategory().equalsIgnoreCase("bebida"))
+                .mapToInt(p->p.getStock())
+                .sum();
+
+
+        System.out.println(totalSuma);
+
+
+        ConnectionPostgresSql connectionPostgresSql = new ConnectionPostgresSql();
+
+        connectionPostgresSql.doConnectionDb();
+
+
+
+/*
         listaProductos
                 .stream()
                 .forEach(p-> Commons.writeFile("backupProduct.txt",p.saveBackup()));*/

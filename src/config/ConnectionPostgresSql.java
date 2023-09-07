@@ -3,14 +3,16 @@ package config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class ConnectionDB {
-    private String jdbcUrl="jdbc:mysql://localhost:3307/caja";
-    private String userDB="root";
-    private String password="daniel0223";
+public class ConnectionPostgresSql {
+
+    private String jdbcUrl="jdbc:postgresql://localhost:5432/postgres";
+    private String userDB="postgres";
+    private String password="postgres";
+
     public Connection doConnectionDb(){
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection= DriverManager.getConnection(jdbcUrl,userDB,password);
+            System.out.println("conexion exitosa a  Postgres");
             return connection;
         }catch (Exception e){
             System.out.println(e);

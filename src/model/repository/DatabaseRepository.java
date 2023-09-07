@@ -1,11 +1,17 @@
-package model.migrations;
+package model.repository;
+
+import config.ConnectionDB;
+import model.migrations.CreateTableProduct;
 
 import java.sql.Connection;
 import java.sql.Statement;
 
-public class AdminMigration {
-    public void orquestarMigraciones(Connection connection){
+public class DatabaseRepository {
+    public void orquestarMigraciones(){
+
         try {
+            ConnectionDB connectionDB = new ConnectionDB();
+            var connection = connectionDB.doConnectionDb();
             System.out.println("Ejecutando migraciones");
             CreateTableProduct createTableExample = new CreateTableProduct();
             Statement statement = connection.createStatement();
